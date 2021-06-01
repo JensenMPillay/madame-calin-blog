@@ -48,7 +48,7 @@ const Section = React.forwardRef(({ admin, type, id, title, content, link, image
                                 <li><Link className="button" to={link ? (link) : (`/`)}>En Savoir Plus</Link></li>
                             </ul>
                         </div>
-                        <span className="image"><img src="images/pic01.jpg" alt="" /></span>
+                        <span className="image"><img src={image} alt="" /></span>
                     </div>
                     {admin && <button className="button small delsectionbtn" onClick={() => handleDelSection(id)}>Supprimer</button>}
                 </section>

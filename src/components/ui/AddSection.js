@@ -93,7 +93,7 @@ function AddSection() {
                             <input type="text" name="link" id="link" value={link} placeholder="Ajoutez un lien" autoComplete='on' onChange={handleChange} />
                         </div>
                         <div className="col-3 col-12-xsmall">
-                            <input type="text" name="image" id="image" value={image} placeholder="Insérez une illustration" autoComplete='on' onChange={handleChange} />
+                            <input type="text" name="image" id="image" value={image} placeholder="Collez le lien de la photo .png" autoComplete='on' onChange={handleChange} />
                         </div>
                     </Fragment>
                 )
