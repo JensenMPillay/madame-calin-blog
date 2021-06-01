@@ -7,6 +7,8 @@ import Footer from '../mainpage/Footer';
 
 function LogIn(props) {
 
+    // Import du Contexte Firebase
+
     const contextFirebase = useContext(FirebaseContext);
 
     const initialData = {
@@ -23,6 +25,8 @@ function LogIn(props) {
     const handleChange = (event) => {
         setLoginData({...loginData, [event.target.id]: event.target.value});
     }
+
+    // Fonction Submit qui renvoie à la fonction logIn de Firebase et redirige ensuite vers "/main"
 
     const handleSubmit = (event) => {
         event.preventDefault();

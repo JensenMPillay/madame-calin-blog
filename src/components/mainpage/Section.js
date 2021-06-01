@@ -4,12 +4,22 @@ import { FirebaseContext } from '../firebase';
 
 const Section = React.forwardRef(({ admin, type, id, title, content, link, image }, ref) => {
 
+    // Import du Contexte
+
     const contextFirebase = useContext(FirebaseContext);
 
     const capitalize = (string) => {
-        if (typeof string !== 'string') return '' // Vérification variable = chaîne de caractères
-        return string.charAt(0).toUpperCase() + string.slice(1) // => 1ere lettre en Maj
+
+        // Vérification variable = chaîne de caractères
+
+        if (typeof string !== 'string') return '' 
+
+        // => 1ere lettre en Maj
+
+        return string.charAt(0).toUpperCase() + string.slice(1) 
     }
+
+    // Fonction de suppression de la section 'id'
 
     const handleDelSection = (id) => {
         contextFirebase.contentData(id)
@@ -21,6 +31,8 @@ const Section = React.forwardRef(({ admin, type, id, title, content, link, image
         document.querySelector('section#Le1erLearnMore>footer>button.delsectionbtn').innerHTML='Supprimée !';
         
     }
+
+    // Affichage section selon le 'type'
 
     switch (type) {
         case 'introduction':

@@ -4,6 +4,8 @@ import Logo from '../../assets/Logo.svg'
 
 function Header(props) {
 
+    // Fonction de survolage de l'element
+
     const HandleMouse = (bool) => {
         bool ? document.getElementById('fusee').classList.add('alt') : document.getElementById('fusee').classList.remove('alt');
     }

@@ -7,6 +7,8 @@ import Footer from '../mainpage/Footer';
 
 function SignUp(props) {
 
+    // Import du Contexte Firebase
+
     const contextFirebase = useContext(FirebaseContext);
 
     const initialData = {
@@ -32,6 +34,8 @@ function SignUp(props) {
         }
     }
 
+    // Fonction Submit qui fait appel à la fonction authUser pour enregistrer chaque user uid avec les éléments fournis dans le formulaire
+
     const handleSubmit = (event) => {
         event.preventDefault();
         contextFirebase.signUpUser(email, password)
@@ -43,11 +47,17 @@ function SignUp(props) {
                     status: status
                 });
             })
+
+            // Log directement le user après inscription 
+
             .then(()=> {
                 setLoginData({ ...initialData });
                 contextFirebase.logInUser(email, password);
                 props.history.push('/main');
             })
+
+            // Gestion des erreurs
+
             .catch((error) => {
                 setError(error);
                 if (document.getElementById('body').contains(document.getElementById('inscrerror'))) {
@@ -62,9 +72,12 @@ function SignUp(props) {
             })
     }
 
+    // Vérification des éléments fournis
+
     const submit = username === '' || email === '' || password === '' || status === '' || password !== vpassword ? (<input type="submit" value="Valider" className="primary" disabled />) : (<input type="submit" value="Valider" className="primary" />);
 
     // Gestion Erreur 
+    
     const errorMsg = error !== '' && <span id='inscrerror' onClick={()=>{setError("")}}>{error.message}</span>;
 
 

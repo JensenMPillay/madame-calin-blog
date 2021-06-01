@@ -2,26 +2,47 @@ import React, { useState, useEffect } from 'react';
 
 const Navbar = React.forwardRef(({ sectionList, navOffSetHeight }, ref) => {
 
-    const [navOffSetTop, setNavOffSetTop] = useState(0) // Initialisation Position Navbar
-    const [offSetSections, setOffSetSections] = useState([]) //Initialisation Position Sections
+    // Initialisation Position Navbar
+
+    const [navOffSetTop, setNavOffSetTop] = useState(0) 
+
+    //Initialisation Position Sections
+
+    const [offSetSections, setOffSetSections] = useState([]) 
 
     const capitalize = (string) => {
-        if (typeof string !== 'string') return '' // Vérification variable = chaîne de caractères
-        return string.charAt(0).toUpperCase() + string.slice(1) // => 1ere lettre en Maj
+
+        // Vérification variable = chaîne de caractères
+
+        if (typeof string !== 'string') return '' 
+
+        // => 1ere lettre en Maj
+
+        return string.charAt(0).toUpperCase() + string.slice(1) 
     }
 
     useEffect(() => {
         const addAltClass = () => {
 
-            if (window.scrollY >= navOffSetTop) { // Si le Scroll de la fenêtre > Position Navbar
-                document.getElementById('nav').classList.add('alt') // Ajout de la Class 'alt'
+            // Si le Scroll de la fenêtre > Position Navbar
+
+            if (window.scrollY >= navOffSetTop) { 
+
+                // Ajout de la Class 'alt'
+
+                document.getElementById('nav').classList.add('alt') 
             }
             else {
-                document.getElementById('nav').classList.remove('alt') // Suppression de la Class 'alt'
+
+                // Suppression de la Class 'alt'
+
+                document.getElementById('nav').classList.remove('alt') 
             }
         }
 
-        if (document.getElementById('body').contains(document.getElementById('nav'))) { // Vérification présence Navbar
+        // Vérification présence Navbar
+
+        if (document.getElementById('body').contains(document.getElementById('nav'))) { 
             setNavOffSetTop(document.getElementById('nav').offsetTop);
             window.addEventListener("scroll", addAltClass);
         }
@@ -33,12 +54,17 @@ const Navbar = React.forwardRef(({ sectionList, navOffSetHeight }, ref) => {
 
     useEffect(() => {
 
+        // Récupération des sectiopns
+
         const sectionListFilter = sectionList.map((section) => {
             const sections = document.getElementsByTagName('section');
             const sectionData = sections[section.id];
             return (sectionData);
-        }) // Récupèration sections
-        setOffSetSections(() => sectionListFilter.map((section) => { // => un objet avec coordonnées pour chaque section de sectionList
+        })
+
+        // => un objet avec coordonnées pour chaque section de sectionList
+
+        setOffSetSections(() => sectionListFilter.map((section) => { 
             return ({
                 id: section.id,
                 posTop: section.offsetTop - navOffSetHeight,
@@ -52,9 +78,10 @@ const Navbar = React.forwardRef(({ sectionList, navOffSetHeight }, ref) => {
 
         const buttons = document.getElementsByTagName('button');
 
+        // Ajout/Suppression de la Class 'active' selon Scroll de la fenêtre / Position section
+
         const buttonActiveOnScroll = () => {
             offSetSections.map((section) => {
-                // Ajout/Suppression de la Class 'active' selon Scroll de la fenêtre / Position section
                 if (window.scrollY >= section.posTop && window.scrollY < section.posBottom) {
                     buttons[section.id].classList.add('active');
                 }
@@ -66,7 +93,9 @@ const Navbar = React.forwardRef(({ sectionList, navOffSetHeight }, ref) => {
 
         }
 
-        if (document.getElementById('body').contains(document.getElementById('nav'))) { // Vérification présence Navbar
+        // Vérification présence Navbar
+
+        if (document.getElementById('body').contains(document.getElementById('nav'))) { 
             window.addEventListener("scroll", buttonActiveOnScroll);
         }
 
@@ -79,6 +108,9 @@ const Navbar = React.forwardRef(({ sectionList, navOffSetHeight }, ref) => {
     return (
         <nav id="nav" ref={ref}>
             <ul className='menu-list'>
+
+                {/* Création d'un bouton dynamique pour chaque section de offSetSections  */}
+
                 {offSetSections.map((section, key) => {
                     return (
                         <li key={key}>

@@ -2,6 +2,8 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
+// Paramétrage de la configuration Firebase
+
 const firebaseConfig = {
     apiKey: "AIzaSyAyAspanAJ1BC7ONX3H1cLV-8k8LEU2P4Y",
     authDomain: "madame-calin.firebaseapp.com",
@@ -11,6 +13,7 @@ const firebaseConfig = {
     appId: "1:1055047972171:web:7e7baa42e257af561da4ce"
 };
 
+// Paramétrage des méthodes de Firebase (auth, gestion db)
 
 class Firebase {
     constructor() {

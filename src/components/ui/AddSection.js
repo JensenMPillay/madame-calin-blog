@@ -5,7 +5,11 @@ import Footer from '../mainpage/Footer';
 
 function AddSection() {
 
+    // Import du Contexte
+
     const contextFirebase = useContext(FirebaseContext);
+
+    // Initialisation des datas
 
     const initialData = {
         type: '',
@@ -22,6 +26,7 @@ function AddSection() {
 
     const [error, setError] = useState('');
 
+    // A chaque changement de l'event, modifie la "data" correspondant selon la "value"
     const handleChange = (event) => {
         if (event.target.id === "introduction" || event.target.id === "presentation" || event.target.id === "statistics" || event.target.id === "learnmore") {
             setSectionData({ ...sectionData, type: event.target.id });
@@ -32,6 +37,9 @@ function AddSection() {
     }
 
     const handleSubmit = (event) => {
+
+        // Au Submit, annule le rechargement de la page et enregistre les datas dans la base de données de Firebase
+
         event.preventDefault();
         return contextFirebase.contentData(sectionData.id).set({
             type: type,
@@ -41,10 +49,16 @@ function AddSection() {
             link: link,
             image: image
         })
+
+            // Réinitialisation des données 
+
             .then(() => {
                 setSectionData({ ...initialData });
                 //props.history.push('/main');
             })
+
+            // Gestion des erreurs
+
             .catch((error) => {
                 setError(error);
                 if (document.getElementById('body').contains(document.getElementById('inscrerror'))) {
@@ -58,6 +72,8 @@ function AddSection() {
                 setSectionData({ ...initialData });
             })
     }
+
+    // Selon le type, propose un formulaire différent
 
     const formType = (type) => {
         switch (type) {

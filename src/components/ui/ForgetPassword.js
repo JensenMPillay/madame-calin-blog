@@ -7,6 +7,8 @@ import Footer from '../mainpage/Footer';
 
 function ForgetPassword(props) {
 
+    //Import Contexte Firebase
+
     const contextFirebase = useContext(FirebaseContext);
 
     const [loginData, setLoginData] = useState('')
@@ -14,6 +16,8 @@ function ForgetPassword(props) {
     const [success, setSuccess] = useState(false)
 
     const [error, setError] = useState('')
+
+    // Fonction Submit qui reset Password via Firebase, modifie l'état en "success" et renvoie à "/login"
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -25,6 +29,9 @@ function ForgetPassword(props) {
                     return <Redirect to='/login' />
                 }, 5000);
             })
+
+            // Gestion des erreurs
+
             .catch((error) => {
                 setError(error);
                 if (document.getElementById('body').contains(document.getElementById('inscrerror'))) {
@@ -38,6 +45,8 @@ function ForgetPassword(props) {
                 setLoginData('');
             });
     }
+
+    // Modifie état bouton "submit" selon loginData
 
     const submit = loginData === '' ? (<input type="submit" value="Valider" className="primary" disabled />) : (<input type="submit" value="Valider" className="primary" />)
 

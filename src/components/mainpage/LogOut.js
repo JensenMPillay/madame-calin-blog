@@ -4,13 +4,21 @@ import  { Redirect } from 'react-router-dom'
 
 function LogOut() {
 
+    // Import du Contexte
+
     const contextFirebase = useContext(FirebaseContext);
 
+    // State du Check
+
     const [checked, setChecked] = useState(false);
+
+    // Fonction changeant l'état
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
     }
+
+    // Deconnexion lorsque du Click et Redirection à :/
 
     useEffect(() => {
         if (checked) {

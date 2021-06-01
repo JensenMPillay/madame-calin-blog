@@ -10,7 +10,11 @@ import Footer from './Footer';
 
 function Main(props) {
 
+    // Import du Contexte
+
     const contextFirebase = useContext(FirebaseContext);
+
+    // Initialisation des Références des éléments
 
     const navbarRef = useRef(null);
 
@@ -18,12 +22,22 @@ function Main(props) {
 
     const footerRef = useRef(null);
 
+    // Initiatlisation de la liste des sections
+
     const [sectionList, setSectionList] = useState([])
-    const [navOffSetHeight, setNavOffSetHeight] = useState(0) // Initialisation Position Navbar
+
+    // Initialisation Position Navbar
+    
+    const [navOffSetHeight, setNavOffSetHeight] = useState(0) 
+
+    // Récupération des sections via Firebase
 
     useEffect(() => {
         contextFirebase.allSectionData()
             .get()
+
+            // Pour chaque section récupérée via Firebase, l'ajoute à la liste des sections
+
             .then((allSectionData) => {
                 allSectionData.forEach(section => {
                     const sectionData = section.data();
@@ -35,31 +49,43 @@ function Main(props) {
             })
     }, [contextFirebase])
 
-
-
     useEffect(() => {
+
+        // Initialisation de la position de la Navbar
 
         if (footerRef.current !== null) {
             setNavOffSetHeight(document.getElementById('nav').offsetHeight);
             const removeNavBar = () => {
 
-                if (window.scrollY >= (footerRef.current.offsetTop - navOffSetHeight)) { // Si le Scroll de la fenêtre > Position Footer
+                // Si le Scroll de la fenêtre > Position Footer
+
+                if (window.scrollY >= (footerRef.current.offsetTop - navOffSetHeight)) { 
                     navbarRef.current.style.display = "none";
                 }
-                else if (window.scrollY < (footerRef.current.offsetTop - navOffSetHeight)) { // Si le Scroll de la fenêtre < Position Footer
+
+                // Si le Scroll de la fenêtre < Position Footer
+
+                else if (window.scrollY < (footerRef.current.offsetTop - navOffSetHeight)) { 
                     navbarRef.current.style.display = "initial";
                 }
             };
 
-            if (document.getElementById('body').contains(document.getElementById('nav'))) { // Vérification présence Navbar
+            // Vérification présence Navbar et écoute "scroll" pour la fonction removeNavbar
+
+            if (document.getElementById('body').contains(document.getElementById('nav'))) { 
                 window.addEventListener("scroll", removeNavBar);
             };
+
+            // Désactive l'écoute à la décomposition du composant
 
             return () => {
                 window.removeEventListener("scroll", removeNavBar);
             };
         };
     }, [navOffSetHeight])
+
+    // Vérification du statut "admin" via la donnée Firebase
+
 
     const admin = (props.userData.status === 'daddy' || props.userData.status === 'mummy')
 
@@ -76,6 +102,8 @@ function Main(props) {
 
                 <div id="main">
 
+                    {/* Pour chaque section de la liste des sections, renvoie une section avec les éléments de la base de données */}
+
                     {sectionList.map((section) => {
                         const { type, id, title, content, link, image } = section;
                         return (
@@ -84,6 +112,8 @@ function Main(props) {
                     })}
 
                 </div>
+
+                {/* Selon statut "admin", ajout d'une section "addsection" */}
 
                 {admin &&
                     <section id='+'>

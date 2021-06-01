@@ -13,21 +13,31 @@ import AddSection from './components/ui/AddSection';
 
 function App() {
 
+  // Import du Contexte Firebase
+
   const contextFirebase = useContext(FirebaseContext);
+
+  // Paramétrage de la Session Utilisateur
 
   const [userSession, setUserSession] = useState(null);
 
   const [userData, setUserData] = useState({});
 
+  // Effet via la class au chargement
+
   useEffect(() => {
     document.getElementsByTagName('body').body.classList.add('is-preload');
   }, [contextFirebase])
+
+  // Ecoute via une fonction Firebase afin de vérifier que l'user est authentifié (afin de sécuriser l'accès aux pages)
 
   useEffect(() => {
 
     let listener = contextFirebase.auth.onAuthStateChanged((user) => {
       user ? (setUserSession(user)) : setUserSession(false)
     })
+
+    // Si l'user est connecté, recueillir toutes ses données
 
     if (userSession !== null && userSession !== false) {
       contextFirebase.userData(userSession.uid)
@@ -46,6 +56,8 @@ function App() {
       listener()
     }
   }, [contextFirebase, userSession])
+
+  // Si l'user n'est pas authentifié, affichage du loader et de la HomePage
 
   return userSession === null ? (
     <BrowserRouter>
