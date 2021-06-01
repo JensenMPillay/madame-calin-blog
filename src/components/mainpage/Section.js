@@ -27,8 +27,8 @@ const Section = React.forwardRef(({ admin, type, id, title, content, link, image
             .catch((error) => {
                 console.log(error)
             })
-        document.querySelector('section#Le1erLearnMore>footer>button.delsectionbtn').classList.add('success');
-        document.querySelector('section#Le1erLearnMore>footer>button.delsectionbtn').innerHTML='Supprimée !';
+        document.querySelector(`section#${id}>footer>button.delsectionbtn`).classList.add('success');
+        document.querySelector(`section#${id}>footer>button.delsectionbtn`).innerHTML='Supprimée !';
         
     }
 
